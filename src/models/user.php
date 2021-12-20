@@ -9,9 +9,9 @@ class User {
     private $email;
     private $phoneNumber;
     private $address;
-    private $role;
+    private $userRole;
     private $username;
-    private $password;
+    private $userPassword;
 
     private $db;
     private $is_logged = false;
@@ -21,13 +21,16 @@ class User {
 
     public function __construct($db) {
 
-		session_start();
 
+		if(!isset($_SESSION)) 
+		{ 
+			session_start(); 
+		} 
 		$this->db = $db;
 
 		$this->update_messages();
 
-		if (isset($_GET['login'])) {
+		if (isset($_POST['login'])) {
 
 			$this->login();
 		}     
@@ -45,7 +48,11 @@ class User {
     public function login() 
     {
 			$this->username = $this->db->real_escape_string($_POST['username']);
-			$this->password = sha1($this->db->real_escape_string($_POST['password']));
+			$this->userPassword = sha1($this->db->real_escape_string($_POST['password']));
+
+			if(empty($this->username) ||  empty($this->userPassword)){
+				return;
+			}
 
 			if ($row = $this->authenticate_user()) 
             {
@@ -61,7 +68,7 @@ class User {
 					setcookie('username', $this->username, time() + 604800);
 
 				// To avoid resending the form on refreshing
-				header('Location: ' . $_SERVER['REQUEST_URI']);
+				header('Location: index.php');
 				exit();
 
 			} 
@@ -69,47 +76,52 @@ class User {
 
 	}
 
-
 	// Check if username and password match
-
 	private function authenticate_user() {
 
 		$query  = 'SELECT * FROM users '
-				. 'WHERE user = "' . $this->username . '" '
-				. 'AND password = "' . $this->password . '"';
+				. 'WHERE username = "' . $this->username . '" '
+				. 'AND userPassword = "' . $this->userPassword . '"';
 
 		return ($this->db->query($query)->fetch_object());
 
 	}
 
-
     public function register() {
 
-        if ($_POST['password'] == $_POST['confirm']) {
+		try{
+			if ($_POST['password'] == $_POST['confirm']) {
 
-            $username = $this->db->real_escape_string($_POST['username']);
-            $password = sha1($this->db->real_escape_string($_POST['password']));
-            $firstName = $this->db->real_escape_string($_POST['firstName']);
-            $lastName = $this->db->real_escape_string($_POST['lastName']);
-            $email = $this->db->real_escape_string($_POST['email']);
-            $phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
-            $address = $this->db->real_escape_string($_POST['address']);
-            $role = "tradesman";
+				$username = $this->db->real_escape_string($_POST['email']);
+				$userPassword = sha1($this->db->real_escape_string($_POST['password']));
+				$firstName = $this->db->real_escape_string($_POST['firstName']);
+				$lastName = $this->db->real_escape_string($_POST['lastName']);
+				$email = $this->db->real_escape_string($_POST['email']);
+				$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
+				$address = $this->db->real_escape_string($_POST['address']);
+				$userRole = "tradesman";
+	
+				$query  = "INSERT INTO users (username, userPassword, firstName, lastName, email, phoneNumber, address, userRole)
+						VALUES ('$username', '$userPassword', '$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$userRole')";
+	
+				echo $query;
 
-            $query  = "INSERT INTO users (username, password, firstName, lastName, email, phoneNumber, address, role) '
-                    . 'VALUES ('$username', '$password', '$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$role')";
-
-            if ($this->db->query($query)) 
-            {
-                $this->msg[] = 'User signup successful.';
-                $_SESSION['msg'] = $this->msg;
-            }
-            // To avoid resending the form on refreshing
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit();
-
-        } 
-        else $this->error[] = 'Passwords don\'t match.';
+				if ($this->db->query($query)) 
+				{
+					$this->msg[] = 'User signup successful.';
+					$_SESSION['msg'] = $this->msg;
+				}
+				// To avoid resending the form on refreshing
+				header('Location: ' . $_SERVER['REQUEST_URI']);
+				exit();
+	
+			} 
+			else $this->error[] = 'Passwords don\'t match.';
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
+  
 	}
 
     // Copy error & info messages from $_SESSION to the user object
@@ -133,6 +145,21 @@ class User {
 		header('Location: index.php');
 		exit();
 	}
+
+	public function is_logged() { return $this->is_logged; }
+
+	public function display_errors() {
+		foreach ($this->error as $error) {
+			echo '<p class="text-danger">' . $error . '</p>';
+		}
+	}
+
+	public function display_info() {
+		foreach ($this->msg as $msg) {
+			echo '<p class="msg">' . $msg . '</p>';
+		}
+	}
+
 
 
 }
