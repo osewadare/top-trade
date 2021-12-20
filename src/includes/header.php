@@ -1,23 +1,3 @@
-<?php
-
-require_once('config/db.php');
-require_once('models/user.php');
-$db = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-
-if ($db->connect_errno) {
-	echo 'Database connection problem: ' . $db->connect_errno;
-	exit();
-}
-
-// If not signed in just proceed
-// If signed in determine if Artisan or Admin and then instantitate that class 
-
-$user = new User($db);
-
-
-?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,18 +25,3 @@ $user = new User($db);
 </head>
 
 <body>
-
-<?php
-
- $currentPath = basename($_SERVER['PHP_SELF']);
-
-	if (!$user->is_logged() && $currentPath != "register.php") 
-    {
-        /*include('login.php');
-
-		include('includes/footer.php');
-
-		exit();*/
-
-	}
-?>

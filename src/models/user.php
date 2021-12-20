@@ -19,30 +19,14 @@ class User {
     private $error = array();
 
 
-    public function __construct($db) {
-
-
+    public function __construct($db) 
+	{
 		if(!isset($_SESSION)) 
 		{ 
 			session_start(); 
 		} 
 		$this->db = $db;
-
 		$this->update_messages();
-
-		if (isset($_POST['login'])) {
-
-			$this->login();
-		}     
-        elseif (isset($_POST['register'])) {
-
-			$this->register();
-		}
-        elseif (isset($_POST['logout'])) {
-
-			$this->logout();
-		} 
-		return $this;
 	}
 
     public function login() 
@@ -68,7 +52,7 @@ class User {
 					setcookie('username', $this->username, time() + 604800);
 
 				// To avoid resending the form on refreshing
-				header('Location: index.php');
+				header('Location: views/artisan.dashboard.view.php');
 				exit();
 
 			} 

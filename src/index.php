@@ -1,27 +1,19 @@
-<?php 
-require("functions.php");
-require('config/db.php');
-?>
-
 <?php
 
-//Get all Artisans and there ratings
-//Get all Trades
+require_once 'controllers/controller.php';
+
+$section = $_GET['section'] ?? $_POST['section'] ?? 'home';
+$action = $_GET['action'] ?? $_POST['action'] ?? 'default';
 
 
-$db = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-$query = 'SELECT * FROM Users WHERE userRole= "tradesman"';
-$result = $db->query($query);
-$view_model = [];
-if($result)
-{
-    $view_bag['tradesmen'] = $result;
+if ($section=='auth') {
+    
+    include 'controllers/authController.php';
+    $authController = new authController();
+    $authController->runAction($action);   
+} 
+
+else {
+    include 'controllers/homePage.php';
 }
-else
-{
-    $view_bag['message'] = "No Tradesmen";
-}
-view("index", $view_model);
-
-?>
 

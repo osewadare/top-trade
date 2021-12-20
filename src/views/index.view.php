@@ -30,8 +30,7 @@ include("includes/header.php");
           <div class="clearfix"></div>
         </div>
         <div class="utf_right_side">
-		  <div class="header_widget"> <a href="login.php" class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Sign In </a></div>
-
+			 <div class='header_widget'> <a href='?section=auth' class='button border sign-in popup-with-zoom-anim'><i class='fa fa-sign-in'></i> Sign In </a></div>
         </div>
       </div>
     </div>    
