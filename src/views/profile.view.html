@@ -1,0 +1,67 @@
+<div id="titlebar" class="dashboard_gradient">
+	<div class="row">
+	  <div class="col-md-12">
+		<h2>My Profile</h2>
+		<nav id="breadcrumbs">
+		  <ul>
+			<li><a href="index_1.html">Home</a></li>
+			<li><a href="dashboard.html">Dashboard</a></li>
+			<li>My Profile</li>
+		  </ul>
+		</nav>
+	  </div>
+	</div>
+  </div>
+  <div class="row"> 
+	<div class="col-lg-12 col-md-12">
+	  <div class="utf_dashboard_list_box margin-top-0">
+		<h4 class="gray"><i class="sl sl-icon-user"></i> Profile Details</h4>
+		  <div class="my-profile">
+			<?php 
+			if(isset($result))
+			{
+				if($result['response'])
+				{
+					echo "<h2 class='text-success text-center'>$result[message] </h2>";
+				}
+				else{
+					echo "<h2 class='text-danger text-center'>$result[message] </h2>";
+				}
+			}
+			?>
+
+			  <form method="post" action="index.php">
+			<div class="row with-forms">
+
+				<input name="section" value="dashboard" type="hidden"/>
+				<input name="action" value="updateProfile" type="hidden"/>
+
+				<div class="col-md-4">
+					<label>First Name</label>						
+					<input type="text" class="input-text" name="firstName" value="<?php echo $profile['firstName']; ?>">
+				</div>
+				<div class="col-md-4">
+					<label>Last Name</label>						
+					<input type="text" class="input-text" name="lastName" value="<?php echo $profile['lastName']; ?>">
+				</div>
+				<div class="col-md-4">
+					<label>Phone</label>						
+					<input type="text" class="input-text"  name="phoneNumber" value="<?php echo $profile['phoneNumber']; ?>">
+				</div>
+				<div class="col-md-4">
+					<label>Email</label>						
+					<input type="text" class="input-text" name="email" value="<?php echo $profile['email']; ?>">
+				</div>
+				<div class="col-md-4">
+					<label>Office Address</label>						
+					<input type="text" class="input-text" name="address" value="<?php echo $profile['address']; ?>">
+				</div>
+			  </div>
+			  <button type="submit" class="button preview btn_center_item margin-top-15">Save Changes</button>
+
+			</form>	
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>

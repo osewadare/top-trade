@@ -12,11 +12,10 @@
 
 <!-- Custom Style CSS -->
 <link rel="stylesheet" href="assets/css/stylesheet.css">
+<link rel="stylesheet" href="assets/css/mmenu.css">
+<link rel="stylesheet" href="assets/css/perfect-scrollbar.css">
+<link rel="stylesheet" href="assets/css/style.css" id="colors">
 
-<!--Bootstrap -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese" rel="stylesheet"> 

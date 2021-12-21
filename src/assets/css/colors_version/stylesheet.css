@@ -655,7 +655,7 @@ body #navigation ul ul {
 	border-radius: 0 0 4px 4px;
 }
 #navigation ul ul li a:after {
-	opacity: 1;
+	opacity:1;
 	transition: all 0.25s;
 	transform: translateX(-5px);
 }
@@ -1161,7 +1161,7 @@ body #utf_panel_menu li li li a {
 	font-size: 42px;
 	color:#fff;
 	margin-bottom:15px;
-	font-weight:700;
+	font-weight:600;
 	text-align:center;
 }
 .search_container_block h2 span.typed-words{
@@ -1941,7 +1941,7 @@ background-color:rgba(0,0,0,0.3);
 .sort-by .chosen-container-single .chosen-single span {
 	margin-right: 0px;
 	color: #666;
-	font-weight: 600;
+	font-weight: 500;
 	transition: all 0.2s;
 }
 .sort-by .chosen-container-single .chosen-single div {
@@ -8734,7 +8734,7 @@ span.like-icon {
     right: 0;
     top: 0;
     border: 0;
-    border-radius: 4px;
+    border-radius:4px;
     display: block;
     margin: 0 auto;
 }
@@ -11419,7 +11419,7 @@ div.layout-style {
 }
 .map-box .listing-img-container img {
 	width: 100%;
-	border-radius:4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
 }
 .map-box h4 {
 	margin: 0;

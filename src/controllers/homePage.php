@@ -2,4 +2,4 @@
 <?php
 
 
-include 'views/index.view.php';
+include 'views/index.view.html';

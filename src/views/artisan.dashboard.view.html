@@ -1,0 +1,85 @@
+<div id="titlebar" class="dashboard_gradient">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Dashboard</h2>
+            <nav id="breadcrumbs">
+              <ul>
+                <li><a href="index.php">Home</a></li>
+                <li>Dashboard</li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="utf_dashboard_stat color-1">
+            <div class="utf_dashboard_stat_content">
+              <h4> <?php echo $messages_count ?></h4>
+              <span>Messages</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Map2"></i></div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="utf_dashboard_stat color-2">
+            <div class="utf_dashboard_stat_content">
+            <h4> <?php echo $rating_count ?></h4>
+              <span>Rating Count</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Add-UserStar"></i></div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="utf_dashboard_stat color-3">
+            <div class="utf_dashboard_stat_content">
+            <h4> <?php echo $profile_views ?></h4>
+              <span>Profile Views</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Align-JustifyRight"></i></div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="utf_dashboard_stat color-4">
+            <div class="utf_dashboard_stat_content">
+            <h4> <?php echo $average_rating ?></h4>
+              <span>Average Rating</span>
+            </div>
+            <div class="utf_dashboard_stat_icon"><i class="im im-icon-Diploma"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="utf_dashboard_list_box with-icons margin-top-20">
+            <h4>Recent Messages</h4>
+            <ul>
+              <?php 
+              foreach($recent_messages as $item)
+              {
+                echo "
+                <li>
+                <i class='utf_list_box_icon sl sl-icon-layers'></i> <a> $item </a>
+              </li>";
+              }
+              ?>
+              
+            </ul>
+          </div>
+         
+        </div>
+ 
+        <div class="col-md-12">
+          <div class="footer_copyright_part">Copyright © 2021 Top-Trade Sheffield Hallam University</div>
+        </div>
+      </div>

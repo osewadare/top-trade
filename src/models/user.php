@@ -42,22 +42,71 @@ class User {
             {
 				session_regenerate_id(true);
 				$_SESSION['id'] = session_id();
-				$_SESSION['username'] = $this->username;
-				$_SESSION['email'] = $row->email;
 				$_SESSION['is_logged'] = true;
-				$this->is_logged = true;
+				$_SESSION['username'] = $row->Username;
+
+				$this->firstName = $row->FirstName;
+				$this->lastName = $row->LastName;
+				$this->email = $row->Email;
+				$this->phoneNumber = $row->PhoneNumber;
+				$this->address = $row->Address;
 
 				// Set a cookie that expires in one week
 				if (isset($_POST['remember']))
 					setcookie('username', $this->username, time() + 604800);
 
-				// To avoid resending the form on refreshing
-				header('Location: views/artisan.dashboard.view.php');
-				exit();
-
 			} 
             else $this->error[] = 'Username or password incorrect.';
 
+	}
+
+
+	public function get_profile()
+	{
+		$username = $_SESSION['username'];
+		$query  = 'SELECT * FROM users WHERE username = "' . $username .'"';
+		$row = $this->db->query($query)->fetch_object();
+		$profile["firstName"] = $row->FirstName;
+		$profile["lastName"] = $row->LastName;
+		$profile["email"] = $row->Email;
+		$profile["phoneNumber"] = $row->PhoneNumber;
+		$profile["address"] = $row->Address;
+		return $profile;
+	}
+
+
+	public function update_profile()
+	{
+
+		$firstName = $this->db->real_escape_string($_POST['firstName']);
+		$lastName = $this->db->real_escape_string($_POST['lastName']);
+		$email = $this->db->real_escape_string($_POST['email']);
+		$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
+		$address = $this->db->real_escape_string($_POST['address']);
+
+		$username = $_SESSION['username'];
+
+		$query = "UPDATE users SET firstName='$firstName', lastName='$lastName', 
+				  email='$email', phoneNumber='$phoneNumber', address='$address'
+				   WHERE username ='" . "$username " . "'";
+		if($this->db->query($query))
+		{
+			$result['response'] = true;
+			$result['message'] = 'Profile update successful';
+			return $result;
+		}
+		else{
+			$result['response'] = false;
+			$result['message'] = 'Profile update failed';
+			return $result;
+		}
+	}
+
+	
+	
+
+	public function get_username(){
+		return $this->username;
 	}
 
 	// Check if username and password match
