@@ -15,5 +15,11 @@ class Template {
     function view_no_data($template){
         include   'layouts/' . $this->layout .  '.html';  
     }
+
+    function view_no_layout($template, $view_data){
+        extract($view_data);
+        include   $template .  '.html';  
+    }
+
 }
 ?>

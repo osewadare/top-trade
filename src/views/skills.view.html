@@ -1,0 +1,66 @@
+<div id="titlebar" class="dashboard_gradient">
+	<div class="row">
+	  <div class="col-md-12">
+		<h2>My Profile</h2>
+		<nav id="breadcrumbs">
+		  <ul>
+			<li><a href="index_1.html">Home</a></li>
+			<li><a href="dashboard.html">Dashboard</a></li>
+			<li>Skills</li>
+		  </ul>
+		</nav>
+	  </div>
+	</div>
+  </div>
+  <div class="row"> 
+	<div class="col-lg-12 col-md-12">
+	  <div class="utf_dashboard_list_box margin-top-0">
+		<h4 class="gray"><i class="sl sl-icon-user"></i> Skills </h4>
+		  <div class="my-profile">
+			<?php 
+			if(isset($result))
+			{
+				if($result['response'])
+				{
+					echo "<h2 class='text-success text-center'>$result[message] </h2>";
+				}
+				else{
+					echo "<h2 class='text-danger text-center'>$result[message] </h2>";
+				}
+			}
+			?>
+            <div class="col-md-4">
+               <h3>Current Skills</h3>
+			  <form method="post" action="index.php">
+
+                <input name="section" value="dashboard" type="hidden"/>
+				<input name="action" value="updateSkills" type="hidden"/>
+
+
+                  <?php 
+                  foreach($result as $key => $value) {
+                      if($value)
+                      {
+                        echo "
+                        <input type='checkbox' name=skills[] value=$key checked>
+                        <label for=$key>$key</label>";
+                      }
+                      else{
+                        echo "
+                        <input type='checkbox' name=trades[] value=$key>
+                        <label for=$key>$key</label>";
+                      }
+                      
+                  }
+                  ?>
+
+			  <button type="submit" class="button preview margin-top-15">Save Changes</button>
+			</form>	
+        </div>
+
+        </div>
+
+		</div>
+	  </div>
+	</div>
+  </div>

@@ -8,35 +8,44 @@ class AuthController extends Controller {
     }
 
     function loginAction() {
-        include 'models/artisan.php';
-        require 'models/database.php';  
+
         $db = initializeDb();
+
         $artisan = new Artisan($db);
-        $artisan->login();
+        $result = $artisan->login();
 
-        $view_data["username"] = $artisan->get_username();
-        $view_data["messages_count"] = "1000";
-        $view_data["profile_views"] = "1000";
-        $view_data["average_rating"] = "1000";
-        $view_data["rating_count"] = "1000";
+        if($result['response'])
+        {
 
-        $view_data["recent_messages"] = array("Hi, It's Peter Parker. Are you available for a plumbong job");
-        $template = new Template("dashboard");
-        $template->view("artisan.dashboard.view", $view_data);  
-    }
+            $profile = $artisan->get_profile();
+            $view_data["profile"] = $profile;
+            $view_data["messages_count"] = "1000";
+            $view_data["profile_views"] = "1000";
+            $view_data["average_rating"] = "1000";
+            $view_data["rating_count"] = "1000";
+    
+            $view_data["recent_messages"] = array("Hi, It's Peter Parker. Are you available for a plumbong job");
+            $template = new Template("dashboard");
+            $template->view("artisan.dashboard.view", $view_data);  
 
-    function change_passwordAction() {
+        }
+        else{
+            $view_data['result'] = $result['message'];
+            $template = new Template("auth");
+            $template->view("login.view", $view_data);              
+        }
 
-        $view_data[""] = "";
-        $template = new Template("auth");
-        $template->view("change_password.view.php", $view_data);  
     }
 
     function logoutAction() {
 
-        $view_data[""] = "";
+        $db = initializeDb();
+
+        $artisan = new Artisan($db);
+        $artisan->logout();
         $template = new Template("auth");
-        $template->view("index.view.php", $view_data);  
+
+        $template->view_no_data("index.view.php");  
     }
     
 }

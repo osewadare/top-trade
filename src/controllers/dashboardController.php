@@ -9,9 +9,6 @@ class DashboardController extends Controller {
             $template = new Template("auth");
             $template->view_no_data("login.view.php");  
         }
-
-        include 'models/artisan.php';
-        require 'models/database.php';  
         $db = initializeDb();
         $artisan = new Artisan($db);
 
@@ -37,10 +34,12 @@ class DashboardController extends Controller {
 
 
     function profileAction() {
-
-        include 'models/artisan.php';
-        require 'models/database.php'; 
     
+        if(!$_SESSION['is_logged']){
+            $template = new Template("auth");
+            $template->view_no_data("login.view.php");  
+        }
+        
         $db = initializeDb();
         $artisan = new Artisan($db);
         $view_data["profile"] = $artisan->get_profile();
@@ -49,14 +48,85 @@ class DashboardController extends Controller {
     }
 
     function updateProfileAction() {
-
-        include 'models/artisan.php';
-        require 'models/database.php'; 
     
         $db = initializeDb();
         $artisan = new Artisan($db);
 
         $result = $artisan->update_profile();
+        $view_data["result"] = $result;
+        $view_data["profile"] = $artisan->get_profile();
+
+        $template = new Template("dashboard");
+        $template->view("profile.view", $view_data);  
+    }
+
+    function getchangePasswordPageAction() {
+
+        if(!$_SESSION['is_logged']){
+            $template = new Template("auth");
+            $template->view_no_data("login.view.php");  
+        }
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+        $view_data["profile"] = $artisan->get_profile();
+        $template = new Template("dashboard");
+        $template->view("password.view", $view_data);  
+
+    }
+
+    function changePasswordAction() {
+    
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $result = $artisan->update_password();
+        $view_data["result"] = $result;
+        $view_data["profile"] = $artisan->get_profile();
+
+        $template = new Template("dashboard");
+        $template->view("password.view", $view_data);  
+    }
+
+    
+    function getupdateSkillsPageAction() {
+
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+        $view_data["profile"] = $artisan->get_profile();
+
+        $artisanSkills = $artisan->get_artisan_skills();
+        $trade = new Trade($db);
+        $trades = $trade->get_trades();
+
+        foreach($artisanSkills as $skill)
+        {
+            $skills[] = $skill[0];
+
+        }
+
+        foreach($trades as $item){
+
+            if(in_array($item[0], $skills))
+            {
+                $result[$item[0]] = true;
+            }
+            else{
+                $result[$item[0]] = false;
+            }
+        }
+        $view_data["result"] = $result;
+
+        $template = new Template("dashboard");
+        $template->view("skills.view", $view_data);  
+
+    }
+
+    function updateSkillsAction() {
+    
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $result = $artisan->update_skills();
         $view_data["result"] = $result;
         $view_data["profile"] = $artisan->get_profile();
 

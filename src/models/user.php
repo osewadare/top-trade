@@ -44,6 +44,7 @@ class User {
 				$_SESSION['id'] = session_id();
 				$_SESSION['is_logged'] = true;
 				$_SESSION['username'] = $row->Username;
+				$_SESSION['userId'] = $row->Id;
 
 				$this->firstName = $row->FirstName;
 				$this->lastName = $row->LastName;
@@ -55,8 +56,17 @@ class User {
 				if (isset($_POST['remember']))
 					setcookie('username', $this->username, time() + 604800);
 
-			} 
-            else $this->error[] = 'Username or password incorrect.';
+				$result['response'] = true;
+				$result['message'] = 'Profile update successful';
+				return $result;
+		
+		}
+		else{
+			$result['response'] = false;
+			$result['message'] = 'Username or password incorrect.';
+			return $result;
+		}
+       
 
 	}
 
@@ -102,6 +112,54 @@ class User {
 		}
 	}
 
+	public function update_password()
+	{
+
+		$currentPassword = $this->db->real_escape_string($_POST['currentPassword']);
+		$newPassword = $this->db->real_escape_string($_POST['newPassword']);
+		$confirmPassword = $this->db->real_escape_string($_POST['confirmPassword']);
+
+		if(empty($newPassword) || empty($confirmPassword)){
+			$result['response'] = false;
+			$result['message'] = 'All fields not filled';
+			return $result;
+
+		}
+
+		if($newPassword != $confirmPassword){
+			$result['response'] = false;
+			$result['message'] = 'Passwords not matching';
+			return $result;
+		}
+
+		$username = $_SESSION['username'];
+
+		$query  = 'SELECT * FROM users WHERE username = "' . $username .'"';
+		$row = $this->db->query($query)->fetch_object();
+
+		if($row->UserPassword != sha1($currentPassword)){
+			$result['response'] = false;
+			$result['message'] = 'Current Password incorrect';
+		}
+        
+		$newPassword = sha1($newPassword);
+
+		$query = "UPDATE users SET userpassword='$newPassword'
+				   WHERE username ='" . "$username " . "'";
+
+		if($this->db->query($query))
+		{
+			$result['response'] = true;
+			$result['message'] = 'Password change successful';
+			return $result;
+		}
+		else{
+			$result['response'] = false;
+			$result['message'] = 'Password change failed';
+			return $result;
+		}
+	}
+
 	
 	
 
@@ -132,7 +190,7 @@ class User {
 				$email = $this->db->real_escape_string($_POST['email']);
 				$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
 				$address = $this->db->real_escape_string($_POST['address']);
-				$userRole = "tradesman";
+				$userRole = "artisan";
 	
 				$query  = "INSERT INTO users (username, userPassword, firstName, lastName, email, phoneNumber, address, userRole)
 						VALUES ('$username', '$userPassword', '$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$userRole')";
