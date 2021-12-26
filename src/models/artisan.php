@@ -115,6 +115,26 @@ class Artisan extends User {
 		$result = $this->db->query($query)->fetch_all();
 		return $result;
 	}
+
+
+    public function rate_artisan()
+	{
+		$ratingPin = $_POST['ratingPin'];
+        $rating = $_POST['rating'];
+        $name = $_POST['name'];
+
+        $getArtisanQuery = "SELECT Id, firstName, lastName FROM Users WHERE ratingPin = $ratingPin";
+        $artisan = $this->db->query($getArtisanQuery)->fetch_object();
+        if(!empty($artisan))
+        {
+            $artisanId = $artisan->Id;
+            $query = "INSERT INTO ArtisanRatings (artisanId, name, rating)
+            VALUES ('$artisanId', '$name', '$rating')";
+            $this->db->query($query);
+            return $artisan; 
+        }
+        return null;	
+	}
     
 
 }

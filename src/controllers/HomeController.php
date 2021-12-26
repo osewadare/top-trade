@@ -28,7 +28,6 @@ class HomeController extends Controller {
 
         $view_data['searchResults'] = $artisan->search_artisans();
 
-        $view_data["profile"] = $artisan->get_profile();
         $city = new City($db);
         $view_data["cities"] = $city->get_cities();
         $trade = new Trade($db);
@@ -36,6 +35,27 @@ class HomeController extends Controller {
 
         $template = new Template("index");
         $template->view("searchResults.view", $view_data);  
+    }
+
+
+
+    function getRateArtisanPageAction()
+    {
+        $view_data[""] = "";
+        $template = new Template("auth");
+        $template->view("rateArtisan.view", $view_data);  
+    }
+
+    function rateArtisanAction()
+    {
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $view_data['result'] = $artisan->rate_artisan();
+
+
+        $template = new Template("auth");
+        $template->view("rateArtisan.view", $view_data);  
     }
     
 }
