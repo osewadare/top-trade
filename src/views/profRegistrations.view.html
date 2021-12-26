@@ -6,7 +6,7 @@
 		  <ul>
 			<li><a href="index_1.html">Home</a></li>
 			<li><a href="dashboard.html">Dashboard</a></li>
-			<li>Skills</li>
+			<li>My Profile</li>
 		  </ul>
 		</nav>
 	  </div>
@@ -15,8 +15,9 @@
   <div class="row"> 
 	<div class="col-lg-12 col-md-12">
 	  <div class="utf_dashboard_list_box margin-top-0">
-		<h4 class="gray"><i class="sl sl-icon-user"></i> Skills </h4>
+		<h4 class="gray"><i class="sl sl-icon-user"></i> Professional Registrations </h4>
 		  <div class="my-profile">
+
 			<?php 
 			if(isset($result))
 			{
@@ -28,27 +29,36 @@
 					echo "<h2 class='text-danger text-center'>$result[message] </h2>";
 				}
 			}
-			?>	 
-        </div>
-		<b> Current Skills </b>
+			?>
+
+
+			<b> Current Professional Registration </b>
 
 			<ul>
 				<?php
-				foreach($skills as $skill) {
+				foreach($profReg as $reg) {
 					echo "
 					<li> 
-						<a href='#'>$skill[0]</a> 
+						<a href='#'>$reg[0] - $reg[2]</a> 
 					</li>
 				  ";
 				}		
 				?>		
 			</ul>
 
-			<form method="post" action="index.php">
+
+
+
+			  <form method="post" action="index.php">
 			<div class="row with-forms">
 
 				<input name="section" value="dashboard" type="hidden"/>
-				<input name="action" value="updateSkills" type="hidden"/>
+				<input name="action" value="updateProfRegistrations" type="hidden"/>
+
+				<div class="col-md-3">
+					<label>New Professional Registration</label>						
+					<input type="text" class="input-text" name="profReg">
+				</div>
 
 				<div class="col-md-3">
 					<label>Trade</label>	
@@ -70,8 +80,13 @@
 					<button type="submit" class="button preview btn_center_item margin-top-15">Add</button>
 				</div>
 
-        </div>
+				
 
+
+			  </div>
+
+			</form>	
+		  </div>
 		</div>
 	  </div>
 	</div>

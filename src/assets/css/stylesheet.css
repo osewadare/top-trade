@@ -18329,3 +18329,8 @@ width: 5px;
 #utf_rev_slider_block .bootstrap-select.btn-group .dropdown-menu.inner{
     height: 150px;
 }
+
+.available{
+	border: 1px solid #04724d !important;
+	color: #04724d !important;
+}

@@ -56,6 +56,40 @@
 					<label>Office Address</label>						
 					<input type="text" class="input-text" name="address" value="<?php echo $profile['address']; ?>">
 				</div>
+
+				<div class="col-md-4">
+					<label>City</label>	
+					<select name="cityId">
+						<?php
+						foreach($cities as $city) 
+						{
+							if($profile['cityId'] == $city[0])
+							{
+								echo "
+							<option selected value=$city[0]> 
+								$city[1]
+							</option>
+							";
+							}
+							else{
+								echo "
+							<option value=$city[0]> 
+								$city[1]
+							</option>
+							";
+							};
+							
+						}		
+						?>		
+				</select>	
+				</div>
+
+				<div class="col-md-4">
+					<label>Hourly Rate</label>						
+					<input type="text" class="input-text" name="hourlyRate" value="<?php echo $profile['hourlyRate']; ?>">
+				</div>
+
+
 			  </div>
 			  <button type="submit" class="button preview btn_center_item margin-top-15">Save Changes</button>
 

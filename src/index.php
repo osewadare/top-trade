@@ -6,6 +6,7 @@ define('VIEW_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARA
 
 include 'models/artisan.php';
 include 'models/trade.php';
+include 'models/city.php';
 require 'models/database.php'; 
 
 

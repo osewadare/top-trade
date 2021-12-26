@@ -13,6 +13,7 @@ class DashboardController extends Controller {
         $artisan = new Artisan($db);
 
         $profile = $artisan->get_profile();
+
         $view_data["profile"] = $profile;
         $view_data["messages_count"] = "1000";
         $view_data["profile_views"] = "1000";
@@ -43,6 +44,12 @@ class DashboardController extends Controller {
         $db = initializeDb();
         $artisan = new Artisan($db);
         $view_data["profile"] = $artisan->get_profile();
+
+
+        $city = new City($db);
+        $view_data["cities"] = $city->get_cities();
+
+
         $template = new Template("dashboard");
         $template->view("profile.view", $view_data);  
     }
@@ -55,6 +62,9 @@ class DashboardController extends Controller {
         $result = $artisan->update_profile();
         $view_data["result"] = $result;
         $view_data["profile"] = $artisan->get_profile();
+
+        $city = new City($db);
+        $view_data["cities"] = $city->get_cities();
 
         $template = new Template("dashboard");
         $template->view("profile.view", $view_data);  
@@ -87,34 +97,17 @@ class DashboardController extends Controller {
         $template->view("password.view", $view_data);  
     }
 
-    
     function getupdateSkillsPageAction() {
 
         $db = initializeDb();
         $artisan = new Artisan($db);
+
         $view_data["profile"] = $artisan->get_profile();
+        $view_data["skills"] = $artisan->get_artisan_skills();
 
-        $artisanSkills = $artisan->get_artisan_skills();
         $trade = new Trade($db);
-        $trades = $trade->get_trades();
+        $view_data["trades"] = $trade->get_trades();
 
-        foreach($artisanSkills as $skill)
-        {
-            $skills[] = $skill[0];
-
-        }
-
-        foreach($trades as $item){
-
-            if(in_array($item[0], $skills))
-            {
-                $result[$item[0]] = true;
-            }
-            else{
-                $result[$item[0]] = false;
-            }
-        }
-        $view_data["result"] = $result;
 
         $template = new Template("dashboard");
         $template->view("skills.view", $view_data);  
@@ -126,13 +119,60 @@ class DashboardController extends Controller {
         $db = initializeDb();
         $artisan = new Artisan($db);
 
-        $result = $artisan->update_skills();
-        $view_data["result"] = $result;
+        $view_data["result"] = $artisan->update_skills();
+
         $view_data["profile"] = $artisan->get_profile();
+        $view_data["skills"] = $artisan->get_artisan_skills();
+        $trade = new Trade($db);
+        $view_data["trades"] = $trade->get_trades();
 
         $template = new Template("dashboard");
-        $template->view("profile.view", $view_data);  
+        $template->view("skills.view", $view_data);  
     }
+
+    function getProfRegistrationPageAction() {
+
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $view_data["profile"] = $artisan->get_profile();
+        $view_data["profReg"] = $artisan->get_professional_registration();
+
+        $trade = new Trade($db);
+        $view_data["trades"] = $trade->get_trades();
+
+        $template = new Template("dashboard");
+        $template->view("profRegistrations.view", $view_data);  
+
+    }
+
+    function updateProfRegistrationsAction() {
+    
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $view_data["result"] = $artisan->update_professional_registrations();
+
+        $view_data["profile"] = $artisan->get_profile();
+        $view_data["profReg"] = $artisan->get_professional_registration();
+        $trade = new Trade($db);
+        $view_data["trades"] = $trade->get_trades();
+
+        $template = new Template("dashboard");
+        $template->view("profRegistrations.view", $view_data);  
+    }
+
+    function switchAvailabilityAction() {
+
+        $db = initializeDb();
+        $artisan = new Artisan($db);
+
+        $artisan->switch_availability();
+
+        return $this->defaultAction();
+    }
+
+  
     
 }
 ?>

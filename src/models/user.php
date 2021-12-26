@@ -81,6 +81,10 @@ class User {
 		$profile["email"] = $row->Email;
 		$profile["phoneNumber"] = $row->PhoneNumber;
 		$profile["address"] = $row->Address;
+		$profile["hourlyRate"] = $row->HourlyRate;
+		$profile["isAvailable"] = $row->isAvailable;
+		$profile["cityId"] = $row->City;
+		$_SESSION['isAvailable'] = $row->isAvailable;
 		return $profile;
 	}
 
@@ -93,12 +97,15 @@ class User {
 		$email = $this->db->real_escape_string($_POST['email']);
 		$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
 		$address = $this->db->real_escape_string($_POST['address']);
+		$hourlyRate = $this->db->real_escape_string($_POST['hourlyRate']);
+		$cityId = $this->db->real_escape_string($_POST['cityId']);
 
 		$username = $_SESSION['username'];
 
 		$query = "UPDATE users SET firstName='$firstName', lastName='$lastName', 
-				  email='$email', phoneNumber='$phoneNumber', address='$address'
+				  email='$email', phoneNumber='$phoneNumber', address='$address', hourlyRate='$hourlyRate', city='$cityId'
 				   WHERE username ='" . "$username " . "'";
+
 		if($this->db->query($query))
 		{
 			$result['response'] = true;
@@ -159,9 +166,6 @@ class User {
 			return $result;
 		}
 	}
-
-	
-	
 
 	public function get_username(){
 		return $this->username;

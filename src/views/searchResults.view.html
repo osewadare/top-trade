@@ -1,0 +1,54 @@
+<div class="container padding-bottom-70">
+    <div class="row">
+      <div class="col-md-12">
+
+		<h1 class="text-center"> Search Results</h1>
+  <ul>
+
+		
+
+	<?php 
+
+	if(empty($searchResults)){
+		echo"
+		<h2>No results</h2>";
+					}
+
+
+	foreach($searchResults as $result)
+	{
+		echo "
+		<li>
+			<div class='utf_list_box_listing_item'>
+			  <div class='utf_list_box_listing_item-img'>
+				<a href='#'><img src=$result[7] alt=''></a>
+				<span class='like-icon'></span> 
+			  </div>
+			  <div class='utf_list_box_listing_item_content'>
+				<div class='inner'>
+				  <h3>$result[0] $result[1]</h3>
+				  <ul>
+					<li><span><i class='sl sl-icon-location'></i> $result[8]</span></li>
+					<li><span><i class='sl sl-icon-phone'></i> $result[4]</span></li>
+					<li><span><i class='sl sl-icon-email'></i> $result[2]</span></li>
+				  </ul>
+				 
+					<div class='utf_star_rating_section'>
+						<div class='utf_counter_star_rating'>(4.5)</div>
+						<span class='star'></span>
+						<span class='star'></span>
+						<span class='star'></span>
+						<span class='star half'></span>
+						<span class='star empty'></span>
+					</div>
+				</div>
+			  </div>
+			</div>
+		  </li>";
+	}
+	?>
+
+</ul>
+</div>
+	</div>
+	</div>

@@ -1,6 +1,6 @@
 <?php 
 
-class Trade {
+class City {
     
     //Properties 
     private $id;
@@ -14,9 +14,9 @@ class Trade {
 		$this->db = $db;
 	}
 
-    public function get_trades()
+    public function get_cities()
 	{
-		$query  = 'SELECT name, imageurl, Id FROM Trades';
+		$query  = 'SELECT Id, name FROM Cities';
         $result = array();
 
 		$result = $this->db->query($query)->fetch_all();
