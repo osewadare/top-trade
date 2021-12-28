@@ -111,7 +111,7 @@ class Artisan extends User {
 
 		$query  = "SELECT A.firstName, A.lastName, A.email, A.address, A.phoneNumber, A.hourlyRate, C.Name, C.imageUrl, D.Name FROM Users A LEFT JOIN ArtisanTrades B ON A.Id = B.artisanId LEFT JOIN Trades C ON B.tradeId = C.Id LEFT JOIN Cities D ON A.City = D.Id WHERE A.City = $cityId AND B.tradeId = $tradeId GROUP BY A.Id";
         $result = array();
-
+        
 		$result = $this->db->query($query)->fetch_all();
 		return $result;
 	}
