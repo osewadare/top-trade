@@ -37,8 +37,6 @@ class HomeController extends Controller {
         $template->view("searchResults.view", $view_data);  
     }
 
-
-
     function getRateArtisanPageAction()
     {
         $view_data[""] = "";

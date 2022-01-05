@@ -1,0 +1,62 @@
+<?php
+include("includes/header.php");
+?>
+
+<!-- Wrapper -->
+<div id="main_wrapper">
+  <header id="header_part" class="fixed fullwidth_block dashboard">
+    <div id="header" class="not-sticky">
+      <div class="container">
+        <div class="utf_left_side">
+          <div id="logo"> <h2 class="text-white" href="#"> &nbsp; &nbsp; Top Trade</h2> </div>
+          <div class="mmenu-trigger">
+            <button class="hamburger utfbutton_collapse" type="button">
+              <span class="utf_inner_button_box">
+                <span class="utf_inner_section"></span>
+              </span>
+            </button>
+          </div>
+          <nav id="navigation" class="style_one">
+            <ul id="responsive">
+              <li><a href="index.php">Home</a></li>
+            </ul>
+            </li>
+            </ul>
+          </nav>
+          <div class="clearfix"></div>
+        </div>
+        <div class="utf_right_side">
+          <div class="header_widget">  
+            <div class="utf_user_menu">
+              <?php echo 'Hi ' . $profile["firstName"] ?>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="clearfix"></div>
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+    <a href="#" class="utf_dashboard_nav_responsive"><i class="fa fa-reorder"></i> Dashboard Sidebar Menu</a>
+    <div class="utf_dashboard_navigation js-scrollbar">
+      <div class="utf_dashboard_navigation_inner_block">
+        <ul>
+          <li class="active"><a href="#">  Dashboard</a></li>
+          <li><a href="index.php?section=auth&action=logout"> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="utf_dashboard_content">
+        <?php
+        include VIEW_PATH . $template . '.html'; 
+        ?>
+    </div>
+  </div>
+</div>
+
+<?php
+include("includes/footer.php");
+?>

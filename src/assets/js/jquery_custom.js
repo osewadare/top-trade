@@ -51,7 +51,7 @@
         $("#header").not("#header.not-sticky").clone(true).addClass('cloned unsticky').insertAfter("#header");
         $("#navigation.style-2").clone(true).addClass('cloned unsticky').insertAfter("#navigation.style-2");
         $("#logo .sticky-logo").clone(true).prependTo("#navigation.style-2.cloned ul#responsive");
-        var headerOffset = $("#header_part").height() * 2;
+        var headerOffset = 140;
         $(window).scroll(function() {
             if ($(window).scrollTop() >= headerOffset) {
                 $("#header.cloned").addClass('sticky').removeClass("unsticky");
@@ -61,6 +61,7 @@
                 $("#navigation.style-2.cloned").addClass('unsticky').removeClass("sticky");
             }
         });
+		
         var pxShow = 600;
         var scrollSpeed = 500;
         $(window).scroll(function() {
@@ -89,7 +90,8 @@
 			allTabs[i].classList.remove('utf_payment_tab_block_active');
 		  }
 		  event.target.parentNode.parentNode.classList.add('utf_payment_tab_block_active');
-		}		
+		}
+		
         function inlineCSS() {
             $(".search_container_block, section.fullwidth_block, .utf_listing_slider .item, .address-container, .img-box-background, .image-edge, .edge-bg").each(function() {
                 var attrImageBG = $(this).attr('data-background-image');
@@ -191,7 +193,7 @@
 			console.log(error);
 		}
         if ("ontouchstart" in window) {
-            document.documentElement.className = document.documentElement.className + " touch";
+            document.documentElement.className = document.documentElement.className + "touch";
         }
         if (!$("html").hasClass("touch")) {
             $(".parallax").css("background-attachment", "fixed");
@@ -377,6 +379,7 @@
             centerMode: true,
             centerPadding: '15%',
             slidesToShow: 3,
+			rtl: true,
             dots: true,
             arrows: false,
             responsive: [{
@@ -432,10 +435,11 @@
             centerMode: true,
             centerPadding: '20%',
             slidesToShow: 1,
+			rtl: true,
             responsive: [{
                 breakpoint: 1367,
                 settings: {
-                    centerPadding: '15%'
+                    centerPadding: '20%'
                 }
             }, {
                 breakpoint: 1025,
@@ -454,6 +458,7 @@
             infinite: true,
             slidesToShow: 3,
             slidesToScroll: 3,
+			rtl: true,
             dots: true,
             arrows: true,
             responsive: [{
@@ -474,6 +479,7 @@
             infinite: true,
             slidesToShow: 5,
             slidesToScroll: 1,
+			rtl: true,
             dots: true,
             arrows: true,
             responsive: [{
@@ -502,6 +508,7 @@
             infinite: true,
             slidesToShow: 3,
             slidesToScroll: 1,
+			rtl: true,
             dots: true,
             arrows: false,
             responsive: [{
@@ -597,7 +604,7 @@
             } else {
                 $('.fs-inner-container.content').insertBefore('.fs-inner-container.map-fixed');
             }
-        });        
+        });
         $('.utf_leave_rating input').change(function() {
             var $radio = $(this);
             $('.utf_leave_rating .selected').removeClass('selected');

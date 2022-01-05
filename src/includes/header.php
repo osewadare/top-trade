@@ -7,14 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top Trade: Only the best</title>
 
-<!-- Favicon -->
-<link rel="shortcut icon" href="images/favicon.png">
-
 <!-- Custom Style CSS -->
 <link rel="stylesheet" href="assets/css/stylesheet.css">
 <link rel="stylesheet" href="assets/css/mmenu.css">
-<link rel="stylesheet" href="assets/css/perfect-scrollbar.css">
 <link rel="stylesheet" href="assets/css/style.css" id="colors">
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="assets/js/jquery_custom.js"></script>
+<script src="assets/js/mmenu.js"></script>
 
 
 <!-- Google Font -->

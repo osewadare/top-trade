@@ -1,0 +1,20 @@
+<?php 
+if(isset($result))
+{
+    echo "<h4 class='text-danger text-center'>$result </h4>";
+}
+?>
+
+<h6 class="h5 mb-0">Admin Login!</h6>
+<form id="login" method="POST" action="index.php">
+    <input type="hidden" name="section" value="auth" />
+    <input type="hidden" name="action" value="adminlogin" />
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="user" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="password" required />
+    
+    <input id="button-login" type="submit" name="login" value="Log in">
+</form>

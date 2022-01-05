@@ -1,12 +1,11 @@
+<div class="container padding-bottom-70">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular Trades<span>Discover best
+					artisans around you by categories.</span></h3>
+		</div>
 
-  
-  <div class="container padding-bottom-70">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="headline_part centered margin-bottom-35 margin-top-70">Most Popular Trades<span>Discover best artisans around you by categories.</span></h3>
-      </div>
-
-	  <?php
+		<?php
 	  foreach($trades as $trade) {
 		  echo "
 		<div class='col-md-4'> 
@@ -19,51 +18,7 @@
 		 </div>";
 	  }
 	  ?>
-      
-	  <!--<div class="col-md-12 centered_content"> <a href="#" class="button border margin-top-20">View More Categories</a> </div>-->
-    </div>
-  </div>
-  
-  <section class="fullwidth_block padding-top-75 padding-bottom-70" data-background-color="#f9f9f9">
-    <div class="container">
-      <div class="row slick_carousel_slider">
-        <div class="col-md-12">
-          <h3 class="headline_part centered margin-bottom-45"> Top Artisans <span>Explore the top artisans around you</span> </h3>
-        </div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="simple_slick_carousel_block utf_dots_nav"> 
-					<?php
-						foreach($artisans as $artisan) {
-							echo "
-							<div class='utf_carousel_item'> <a href='listings_single_page_1.html' class='utf_listing_item-container compact'>
-								<div class='utf_listing_item'> <img src='images/utf_listing_item-01.jpg' alt=''> <span class='tag'><i class='im im-icon-Chef-Hat'></i> Restaurant</span> <span class='featured_tag'>Featured</span>
-								<span class='utf_open_now'>Open Now</span>
-								<div class='utf_listing_item_content'>
-									<div class='utf_listing_prige_block'>							
-										<span class='utf_meta_listing_price'><i class='fa fa-tag'></i> $25 - $55</span>							
-										<span class='utp_approve_item'><i class='utf_approve_listing'></i></span>
-									</div>
-									<h3>$artisan[0] $artisan[1]</h3>
-									<span><i class='sl sl-icon-location'></i> The Ritz-Carlton, Hong Kong</span>
-									<span><i class='sl sl-icon-phone'></i> (415) 796-3633</span>											
-								</div>					  
-								</div>
-								<div class='utf_star_rating_section' data-rating='4.5'>
-									<div class='utf_counter_star_rating'>(4.5)</div>
-									<span class='utf_view_count'><i class='fa fa-eye'></i> 822+</span>
-									<span class='like-icon'></span>
-								</div>
-								</a> 
-							</div>
-							";
-						}
-						?>
-				</div>
-			  </div>
-		  </div>
-	   </div>
-    </div>
-  </section>
 
- 
+		<!--<div class="col-md-12 centered_content"> <a href="#" class="button border margin-top-20">View More Categories</a> </div>-->
+	</div>
+</div>

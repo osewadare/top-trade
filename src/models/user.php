@@ -26,7 +26,46 @@ class User {
 			session_start(); 
 		} 
 		$this->db = $db;
-		$this->update_messages();
+	}
+
+	public function register() 
+	{
+		try
+		{
+			if ($_POST['password'] == $_POST['confirm']) 
+			{
+				$username = $this->db->real_escape_string($_POST['email']);
+				$userPassword = sha1($this->db->real_escape_string($_POST['password']));
+				$firstName = $this->db->real_escape_string($_POST['firstName']);
+				$lastName = $this->db->real_escape_string($_POST['lastName']);
+				$email = $this->db->real_escape_string($_POST['email']);
+				$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
+				$address = $this->db->real_escape_string($_POST['address']);
+				$userRole = "artisan";
+				$ratingPin = rand(1000,1999);
+
+				$query  = "INSERT INTO Users (username, userPassword, firstName, lastName, email, phoneNumber, address, userRole, ratingPin)
+						VALUES ('$username', '$userPassword', '$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$userRole', '$ratingPin')";
+					
+				if ($this->db->query($query)) 
+				{
+					$result['response'] = true;
+					$result['message'] = 'Signup successful';
+					return $result;
+				}
+				else{
+					$result['response'] = false;
+					$result['message'] = $query;
+					return $result;
+				}
+	
+			} 
+			else $this->error[] = 'Passwords don\'t match.';
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
+  
 	}
 
     public function login() 
@@ -57,24 +96,23 @@ class User {
 					setcookie('username', $this->username, time() + 604800);
 
 				$result['response'] = true;
-				$result['message'] = 'Profile update successful';
+				$result['message'] = 'login successful';
 				return $result;
 		
-		}
-		else{
-			$result['response'] = false;
-			$result['message'] = 'Username or password incorrect.';
-			return $result;
-		}
+			}
+			else{
+				$result['response'] = false;
+				$result['message'] = 'Username or password incorrect.';
+				return $result;
+			}
        
 
 	}
 
-
 	public function get_profile()
 	{
 		$username = $_SESSION['username'];
-		$query  = 'SELECT * FROM users WHERE username = "' . $username .'"';
+		$query  = 'SELECT * FROM Users WHERE username = "' . $username .'"';
 		$row = $this->db->query($query)->fetch_object();
 		$profile["firstName"] = $row->FirstName;
 		$profile["lastName"] = $row->LastName;
@@ -84,10 +122,14 @@ class User {
 		$profile["hourlyRate"] = $row->HourlyRate;
 		$profile["isAvailable"] = $row->isAvailable;
 		$profile["cityId"] = $row->City;
+		$profile["ratingPin"] = $row->RatingPin;
 		$_SESSION['isAvailable'] = $row->isAvailable;
 		return $profile;
 	}
 
+	public function get_username(){
+		return $this->username;
+	}
 
 	public function update_profile()
 	{
@@ -102,7 +144,7 @@ class User {
 
 		$username = $_SESSION['username'];
 
-		$query = "UPDATE users SET firstName='$firstName', lastName='$lastName', 
+		$query = "UPDATE Users SET firstName='$firstName', lastName='$lastName', 
 				  email='$email', phoneNumber='$phoneNumber', address='$address', hourlyRate='$hourlyRate', city='$cityId'
 				   WHERE username ='" . "$username " . "'";
 
@@ -141,7 +183,7 @@ class User {
 
 		$username = $_SESSION['username'];
 
-		$query  = 'SELECT * FROM users WHERE username = "' . $username .'"';
+		$query  = 'SELECT * FROM Users WHERE username = "' . $username .'"';
 		$row = $this->db->query($query)->fetch_object();
 
 		if($row->UserPassword != sha1($currentPassword)){
@@ -151,7 +193,7 @@ class User {
         
 		$newPassword = sha1($newPassword);
 
-		$query = "UPDATE users SET userpassword='$newPassword'
+		$query = "UPDATE Users SET userpassword='$newPassword'
 				   WHERE username ='" . "$username " . "'";
 
 		if($this->db->query($query))
@@ -167,70 +209,6 @@ class User {
 		}
 	}
 
-	public function get_username(){
-		return $this->username;
-	}
-
-	// Check if username and password match
-	private function authenticate_user() {
-
-		$query  = 'SELECT * FROM users '
-				. 'WHERE username = "' . $this->username . '" '
-				. 'AND userPassword = "' . $this->userPassword . '"';
-
-		return ($this->db->query($query)->fetch_object());
-
-	}
-
-    public function register() {
-
-		try{
-			if ($_POST['password'] == $_POST['confirm']) {
-
-				$username = $this->db->real_escape_string($_POST['email']);
-				$userPassword = sha1($this->db->real_escape_string($_POST['password']));
-				$firstName = $this->db->real_escape_string($_POST['firstName']);
-				$lastName = $this->db->real_escape_string($_POST['lastName']);
-				$email = $this->db->real_escape_string($_POST['email']);
-				$phoneNumber = $this->db->real_escape_string($_POST['phoneNumber']);
-				$address = $this->db->real_escape_string($_POST['address']);
-				$userRole = "artisan";
-	
-				$query  = "INSERT INTO users (username, userPassword, firstName, lastName, email, phoneNumber, address, userRole)
-						VALUES ('$username', '$userPassword', '$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$userRole')";
-	
-				echo $query;
-
-				if ($this->db->query($query)) 
-				{
-					$this->msg[] = 'User signup successful.';
-					$_SESSION['msg'] = $this->msg;
-				}
-				// To avoid resending the form on refreshing
-				header('Location: ' . $_SERVER['REQUEST_URI']);
-				exit();
-	
-			} 
-			else $this->error[] = 'Passwords don\'t match.';
-		}
-		catch(Exception $e){
-			echo $e->getMessage();
-		}
-  
-	}
-
-    // Copy error & info messages from $_SESSION to the user object
-	private function update_messages() {
-		if (isset($_SESSION['msg']) && $_SESSION['msg'] != '') {
-			$this->msg = array_merge($this->msg, $_SESSION['msg']);
-			$_SESSION['msg'] = '';
-		}
-		if (isset($_SESSION['error']) && $_SESSION['error'] != '') {
-			$this->error = array_merge($this->error, $_SESSION['error']);
-			$_SESSION['error'] = '';
-		}
-	}
-
     public function logout() {
 
 		session_unset();
@@ -243,18 +221,16 @@ class User {
 
 	public function is_logged() { return $this->is_logged; }
 
-	public function display_errors() {
-		foreach ($this->error as $error) {
-			echo '<p class="text-danger">' . $error . '</p>';
-		}
-	}
+	private function authenticate_user() {
 
-	public function display_info() {
-		foreach ($this->msg as $msg) {
-			echo '<p class="msg">' . $msg . '</p>';
-		}
-	}
+		$query  = 'SELECT * FROM Users '
+				. 'WHERE username = "' . $this->username . '" '
+				. 'AND userPassword = "' . $this->userPassword . '"'
+				. 'AND userRole = "artisan"';
 
+		return ($this->db->query($query)->fetch_object());
+
+	}
 
 
 }

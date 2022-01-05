@@ -74,3 +74,12 @@ textarea::-webkit-input-placeholder {color:#828282;}
 textarea:-moz-placeholder {color:#828282;}
 textarea::-moz-placeholder {color:#828282;}
 textarea:-ms-input-placeholder {color:#828282;}
+
+
+.text-white{
+	color: white !important;
+}
+
+.text-logo{
+	margin-top: 10px !important;
+}

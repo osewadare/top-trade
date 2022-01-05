@@ -22,6 +22,16 @@ class Artisan extends User {
 		return $result;
 	}
 
+    public function get_average_artisan()
+	{
+		$artisanId = $_SESSION['userId'];
+		$query  = 'SELECT AVG(rating) FROM ArtisanRatings WHERE artisanId = ' . $artisanId;
+        $result = array();
+		$result = $this->db->query($query)->fetch_all();
+
+		return $result;
+	}
+
     public function update_skills()
     {
         $artisanId = $_SESSION['userId'];
@@ -43,7 +53,6 @@ class Artisan extends User {
 
     }
 
-
     public function get_professional_registration()
 	{
 		$artisanId = $_SESSION['userId'];
@@ -52,8 +61,6 @@ class Artisan extends User {
 		$result = $this->db->query($query)->fetch_all();
 		return $result;
 	}
-
-
 
     public function update_professional_registrations()
     {
@@ -90,7 +97,6 @@ class Artisan extends User {
 		return $result;
 	}
 
-
     public function switch_availability()
 	{
 
@@ -98,7 +104,7 @@ class Artisan extends User {
 		$currentAvailability = $_SESSION['isAvailable'];  
         $availability = $currentAvailability == 0 ? 1 : 0;
 
-		$query = "UPDATE users SET isAvailable='$availability'
+		$query = "UPDATE Users SET isAvailable='$availability'
 				   WHERE username ='" . "$username " . "'";
 
 		$this->db->query($query);
@@ -108,14 +114,12 @@ class Artisan extends User {
 	{
 		$cityId = $_POST['cityId'];
         $tradeId = $_POST['tradeId'];
-
 		$query  = "SELECT A.firstName, A.lastName, A.email, A.address, A.phoneNumber, A.hourlyRate, C.Name, C.imageUrl, D.Name FROM Users A LEFT JOIN ArtisanTrades B ON A.Id = B.artisanId LEFT JOIN Trades C ON B.tradeId = C.Id LEFT JOIN Cities D ON A.City = D.Id WHERE A.City = $cityId AND B.tradeId = $tradeId GROUP BY A.Id";
         $result = array();
         
 		$result = $this->db->query($query)->fetch_all();
 		return $result;
 	}
-
 
     public function rate_artisan()
 	{
@@ -136,5 +140,4 @@ class Artisan extends User {
         return null;	
 	}
     
-
 }

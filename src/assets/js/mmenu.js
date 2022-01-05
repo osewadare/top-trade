@@ -48,7 +48,7 @@
             t[n] = function(t, e, n) {
                 return this.$menu = t, this._api = ["bind", "getInstance", "initPanels", "openPanel", "closePanel", "closeAllPanels", "setSelected"], this.opts = e, this.conf = n, this.vars = {}, this.cbck = {}, this.mtch = {}, "function" == typeof this.___deprecated && this.___deprecated(), this._initAddons(), this._initExtensions(), this._initMenu(), this._initPanels(), this._initOpened(), this._initAnchors(), this._initMatchMedia(), "function" == typeof this.___debug && this.___debug(), this
             }, t[n].version = i, t[n].addons = {}, t[n].uniqueId = 0, t[n].defaults = {
-                extensions: [],
+                extensions: ["position-right"],
                 initMenu: function() {},
                 initPanels: function() {},
                 navbar: {

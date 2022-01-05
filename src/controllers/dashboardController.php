@@ -2,43 +2,30 @@
 
 class DashboardController extends Controller {
 
-
     function defaultAction(){   
 
         if(!$_SESSION['is_logged']){
             $template = new Template("auth");
-            $template->view_no_data("login.view.php");  
+            $template->view_no_data("artisan.login.view");  
         }
+
         $db = initializeDb();
         $artisan = new Artisan($db);
 
         $profile = $artisan->get_profile();
 
         $view_data["profile"] = $profile;
-        $view_data["messages_count"] = "1000";
-        $view_data["profile_views"] = "1000";
-        $view_data["average_rating"] = "1000";
-        $view_data["rating_count"] = "1000";
+        $view_data["average_rating"] = $artisan->get_average_artisan();
 
-        $view_data["recent_messages"] = array("Hi, It's Peter Parker. Are you available for a plumbong job");
-
-        $template = new Template("dashboard");
+        $template = new Template("artisan.dashboard");
         $template->view("artisan.dashboard.view", $view_data);  
     }
-
-
-    function messagesAction() {
-        $view_data[""] = "";
-        $template = new Template("dashboard");
-        $template->view("index.view.php", $view_data);  
-    }
-
-
+    
     function profileAction() {
     
         if(!$_SESSION['is_logged']){
             $template = new Template("auth");
-            $template->view_no_data("login.view.php");  
+            $template->view_no_data("artisan.login.view");  
         }
         
         $db = initializeDb();
@@ -50,8 +37,8 @@ class DashboardController extends Controller {
         $view_data["cities"] = $city->get_cities();
 
 
-        $template = new Template("dashboard");
-        $template->view("profile.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.profile.view", $view_data);  
     }
 
     function updateProfileAction() {
@@ -66,21 +53,21 @@ class DashboardController extends Controller {
         $city = new City($db);
         $view_data["cities"] = $city->get_cities();
 
-        $template = new Template("dashboard");
-        $template->view("profile.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.profile.view", $view_data);  
     }
 
     function getchangePasswordPageAction() {
 
         if(!$_SESSION['is_logged']){
             $template = new Template("auth");
-            $template->view_no_data("login.view.php");  
+            $template->view_no_data("artisan.login.view");  
         }
         $db = initializeDb();
         $artisan = new Artisan($db);
         $view_data["profile"] = $artisan->get_profile();
-        $template = new Template("dashboard");
-        $template->view("password.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.password.view", $view_data);  
 
     }
 
@@ -93,8 +80,8 @@ class DashboardController extends Controller {
         $view_data["result"] = $result;
         $view_data["profile"] = $artisan->get_profile();
 
-        $template = new Template("dashboard");
-        $template->view("password.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.password.view", $view_data);  
     }
 
     function getupdateSkillsPageAction() {
@@ -109,8 +96,8 @@ class DashboardController extends Controller {
         $view_data["trades"] = $trade->get_trades();
 
 
-        $template = new Template("dashboard");
-        $template->view("skills.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.skills.view", $view_data);  
 
     }
 
@@ -126,8 +113,8 @@ class DashboardController extends Controller {
         $trade = new Trade($db);
         $view_data["trades"] = $trade->get_trades();
 
-        $template = new Template("dashboard");
-        $template->view("skills.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.skills.view", $view_data);  
     }
 
     function getProfRegistrationPageAction() {
@@ -141,8 +128,8 @@ class DashboardController extends Controller {
         $trade = new Trade($db);
         $view_data["trades"] = $trade->get_trades();
 
-        $template = new Template("dashboard");
-        $template->view("profRegistrations.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.profRegistrations.view", $view_data);  
 
     }
 
@@ -158,18 +145,27 @@ class DashboardController extends Controller {
         $trade = new Trade($db);
         $view_data["trades"] = $trade->get_trades();
 
-        $template = new Template("dashboard");
-        $template->view("profRegistrations.view", $view_data);  
+        $template = new Template("artisan.dashboard");
+        $template->view("artisan.profRegistrations.view", $view_data);  
     }
 
     function switchAvailabilityAction() {
-
         $db = initializeDb();
         $artisan = new Artisan($db);
-
         $artisan->switch_availability();
-
         return $this->defaultAction();
+    }
+
+    function deleteuserAction() {
+
+        $db = initializeDb();
+        $admin = new Admin($db);
+        $admin->delete_user();
+        $view_data["profile"] = $admin->get_profile();
+        $view_data["users"] = $admin->get_users();
+        $template = new Template("admin.dashboard");
+        $template->view("admin.dashboard.view", $view_data);  
+
     }
 
   

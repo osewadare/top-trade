@@ -22,9 +22,6 @@ class Trade {
 		$result = $this->db->query($query)->fetch_all();
 		return $result;
 	}
-   
-
-
 }
 
 ?>

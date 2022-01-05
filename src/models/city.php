@@ -23,8 +23,6 @@ class City {
 		return $result;
 	}
    
-
-
 }
 
 ?>
